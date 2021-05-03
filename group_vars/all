@@ -1,0 +1,11 @@
+elk_cluster_name: "elk_on_docker"
+
+elk_app_user: "remote_user"
+elk_group: "remote_user"
+
+elk_app_dir: "/data/elk"
+
+elk_version: "7.10.2"
+elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{elk_version}}-linux-x86_64.tar.gz"
+
+kibana_url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{elk_version}}-linux-x86_64.tar.gz"

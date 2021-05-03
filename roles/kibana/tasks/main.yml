@@ -1,0 +1,69 @@
+---
+# tasks file for kibana
+- name: Create directory
+  file:
+    path: "{{item}}"
+    mode: 0750
+    state: directory
+    owner: "{{elk_app_user}}"
+    group: "{{elk_group}}"
+  become: yes
+  with_items:
+    - "{{elk_app_dir}}"
+  tags: install
+
+- name: kibana gz package check
+  stat:
+    path: "{{elk_app_dir}}/kibana-{{elk_version}}-linux-x86_64.tar.gz"
+  register: kibana_gz_file
+  tags: install
+
+- name: Download kibana binary
+  get_url:
+    url: "{{kibana_url}}"
+    dest: "{{elk_app_dir}}"
+    mode: 0750
+    owner: "{{elk_app_user}}"
+    group: "{{elk_group}}"
+  when: kibana_gz_file.stat.exists == false
+  become: yes
+  tags: install
+
+- name: Unarchive kibana
+  unarchive:
+    src: "{{elk_app_dir}}/kibana-{{elk_version}}-linux-x86_64.tar.gz"
+    dest: "{{elk_app_dir}}"
+    creates: "{{elk_app_dir}}/kibana-{{elk_version}}"
+    remote_src: yes
+    mode: 0750
+    owner: "{{elk_app_user}}"
+    group: "{{elk_group}}"
+  become: yes
+  tags: install
+
+- name: Create a symbolic link
+  file:
+    src: "{{elk_app_dir}}/kibana-{{elk_version}}"
+    dest: "{{elk_app_dir}}/kibana"
+    state: link
+    mode: 0750
+    owner: "{{elk_app_user}}"
+    group: "{{elk_group}}"
+  become: yes
+  tags: install
+
+# - name: Copy kibana config template
+#   template:
+#     src: "{{item.src_name}}"
+#     dest: "{{kibana_config_dir}}/{{item.dest_name}}"
+#     owner: "{{elk_app_user}}"
+#     group: "{{elk_group}}"
+#   become: yes
+#   with_items:
+#     - {src_name: "kibana.yml.j2", dest_name: "kibana.yml"}
+#   loop_control:
+#     label: "{{item.dest_name}}"
+#   tags: install
+
+# - name: Start kibana
+#   shell: "{{elk_app_dir}}/kibana/bin/kibana"

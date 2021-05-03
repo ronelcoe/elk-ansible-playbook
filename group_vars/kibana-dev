@@ -1,0 +1,1 @@
+kibana_config_dir: "{{elk_app_dir}}/kibana/config"

@@ -1,0 +1,6 @@
+---
+
+- name: Install kibana
+  hosts: kibana
+  roles:
+    - kibana

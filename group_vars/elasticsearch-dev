@@ -1,0 +1,8 @@
+elk_app_user: "remote_user"
+elk_group: "remote_user"
+
+elk_app_dir: "/data/elk"
+
+elasticsearch_config_dir: "{{elk_app_dir}}/elasticsearch/config"
+
+kibana_config_dir: "{{elk_app_dir}}/kibana/config"

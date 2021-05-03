@@ -1,0 +1,6 @@
+---
+
+- name: Install elasticsearch
+  hosts: elasticsearch
+  roles:
+    - elasticsearch

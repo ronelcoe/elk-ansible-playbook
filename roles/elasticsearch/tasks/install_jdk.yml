@@ -1,0 +1,23 @@
+---
+- name: Install jdk11
+  yum:
+    name: java-11-openjdk
+    state: present
+  become: yes
+  tags: install
+
+# - name: Uninstall jdk11
+#   yum:
+#     name: java-11-openjdk
+#     state: absent
+#   become: yes 
+#   tags: uninstall
+
+- name: Set JAVA_HOME jdk11
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    regexp: '^JAVA_HOME'
+    line: 'JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.11.0.9-1.el7_9.x86_64'
+  become: yes
+  tags: install
